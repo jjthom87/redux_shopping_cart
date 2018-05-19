@@ -1,4 +1,5 @@
 var path = require('path');
+var models = require('./../models');
 
 module.exports = (app, passport) => {
 	app.get('/', function(req,res){
@@ -43,6 +44,12 @@ module.exports = (app, passport) => {
 		if(req.user){
 			res.json({user: req.user})
 		}
+	})
+
+	app.get('/api/get-products', (req, res) => {
+		models.Product.findAll({}).then((products) => {
+			res.json(products)
+		})
 	})
 
 	app.get('*', (req,res) => {

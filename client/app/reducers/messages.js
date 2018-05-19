@@ -2,7 +2,8 @@
 const initialState = {
     message: '',
     status: '',
-    info: ''
+    info: '',
+    products: undefined
 }
 
 const messages = (state = initialState, action) => {
@@ -15,6 +16,8 @@ const messages = (state = initialState, action) => {
             return { ...state, info: action.info }
         case 'SIGNED_IN_USER':
             return { ...state, user: action.user }
+        case 'GET_PRODUCTS':
+            return { ...state, products: action.products }
        	default:
             return state
     }

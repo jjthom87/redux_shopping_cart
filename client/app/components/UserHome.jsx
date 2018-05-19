@@ -14,6 +14,7 @@ class UserHome extends Component {
                 <h1>React Redux Shopping Cart</h1>
                 <h2>Welcome {this.props.user ? this.props.user.name : ""}</h2>
                 <Link to="/">Home</Link>
+                <Link to="/store">Store</Link>
 			</div>
 	    );
   	}

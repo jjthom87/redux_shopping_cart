@@ -78,3 +78,21 @@ export const isUserSignedIn = () => {
         })
 	}
 }
+
+export const getProducts = () => {
+	return dispatch => {
+		fetch('/api/get-products', {
+			headers: {
+                'content-type': 'application/json',
+                'accept': 'application/json'
+            },
+            credentials: 'same-origin'
+		}).then((response) => response.json())
+		.then((results) => {
+			dispatch({
+				type: 'GET_PRODUCTS',
+				products: results
+			})
+        })
+	}
+}
