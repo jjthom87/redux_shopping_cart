@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import * as Actions from '../actions'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 
 class UserHome extends Component {
 	componentWillMount(){
-		this.props.actions.isUserSignedIn();
+		this.props.actions.isUserSignedIn((results) => {
+			if(results.no_user){
+				this.props.history.push('/sign-in')
+			}
+		});
 	}
   	render() {
 	    return (
@@ -33,4 +37,6 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(UserHome);
+const connectedContainer = connect(mapStateToProps, mapDispatchToProps)(UserHome)
+const RoutedContainer = withRouter(connectedContainer);
+export default RoutedContainer;

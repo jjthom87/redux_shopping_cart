@@ -61,7 +61,7 @@ export const toUserHome = (info) => {
 	}
 }
 
-export const isUserSignedIn = () => {
+export const isUserSignedIn = (cb) => {
 	return dispatch => {
 		fetch('/api/signed-in', {
 			headers: {
@@ -74,7 +74,8 @@ export const isUserSignedIn = () => {
 			dispatch({
 				type: 'SIGNED_IN_USER',
 				user: results.user
-			})
+			});
+			cb(results)
         })
 	}
 }
@@ -94,5 +95,14 @@ export const getProducts = () => {
 				products: results
 			})
         })
+	}
+}
+
+export const categorySelect = (value) => {
+	return dispatch => {
+		dispatch({
+			type: 'CATEGORY_SELECT',
+			categorySelectValue: value
+		})
 	}
 }

@@ -7,9 +7,7 @@ import { bindActionCreators } from 'redux';
 
 class Store extends Component {
 	onSelectChange(e){
-		this.setState({
-			selected: e.target.value
-		})
+		this.props.actions.categorySelect(e.target.value)
 	}
 	componentWillMount(){
 		this.props.actions.getProducts();
@@ -31,6 +29,18 @@ class Store extends Component {
 				)
 			})
   		}
+  		const populateAfterSelect = () => {
+  			let products = this.props.products.filter(product => product.category === this.props.categorySelectValue);
+  			return products.map((product, index) => {
+  				return (
+  					<tr key={index}>
+  						<td>{product.name}</td>
+  						<td>{product.description}</td>
+  						<td>{product.price}</td>
+  					</tr>
+  				)
+  			});
+  		}
 	    return (
 	    	<div>
                 <h1>React Redux Shopping Cart</h1>
@@ -43,8 +53,29 @@ class Store extends Component {
                 <div style={{width: '25%', marginLeft: '50px'}}>
 					<select ref="categorySelect">
 						<option defaultValue="" disabled selected>Choose Category</option>
-						{this.props.products ? populateCategories() : (<option>Awaiting Options</option>)}
+						{ this.props.products ? populateCategories() : (<option>Awaiting Options</option>) }
 					</select>
+				</div>
+				<div>
+					{
+						this.props.categorySelectValue ?
+							<div>
+								<h2>{this.props.categorySelectValue}'s</h2>
+								<table>
+									<thead>
+										<tr>
+											<th>Product Name</th>
+											<th>Product Description</th>
+											<th>Price</th>
+										</tr>
+									</thead>
+									<tbody>
+										{populateAfterSelect()}
+									</tbody>
+								</table>
+							</div> : 
+							<div></div>
+					}
 				</div>
 			</div>
 	    );
@@ -53,7 +84,8 @@ class Store extends Component {
 
 function mapStateToProps(state) {
 	return {
-		products: state.messages.products
+		products: state.messages.products,
+		categorySelectValue: state.messages.categorySelectValue
 	}
 }
 

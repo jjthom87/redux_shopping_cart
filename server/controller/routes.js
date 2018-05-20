@@ -40,10 +40,11 @@ module.exports = (app, passport) => {
 	  	})(req, res, next);
 	});
 
-	app.get('/api/signed-in', (req, res) => {
+	app.get('/api/signed-in', (req, res, done) => {
 		if(req.user){
-			res.json({user: req.user})
+			return res.json({user: req.user})
 		}
+		res.json({no_user: 'no user signed in'})
 	})
 
 	app.get('/api/get-products', (req, res) => {

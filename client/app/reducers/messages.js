@@ -3,7 +3,8 @@ const initialState = {
     message: '',
     status: '',
     info: '',
-    products: undefined
+    products: undefined,
+    categorySelectValue: undefined
 }
 
 const messages = (state = initialState, action) => {
@@ -18,6 +19,8 @@ const messages = (state = initialState, action) => {
             return { ...state, user: action.user }
         case 'GET_PRODUCTS':
             return { ...state, products: action.products }
+        case 'CATEGORY_SELECT':
+            return { ...state, categorySelectValue: action.categorySelectValue}
        	default:
             return state
     }
