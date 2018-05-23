@@ -106,3 +106,46 @@ export const categorySelect = (value) => {
 		})
 	}
 }
+
+export const buyButtonPressed = (user_id, product_id) => {
+	return dispatch => {
+		fetch(`/api/buy/${product_id}`, {
+			method: 'post',
+			body: JSON.stringify({user_id: user_id}),
+			headers: {
+                'content-type': 'application/json',
+                'accept': 'application/json'
+            },
+            credentials: 'same-origin'
+		}).then((response) => response.json())
+		.then(results => {
+			dispatch({
+				type: 'CART_ADDED_RESULTS',
+				status: results
+			})
+		}).catch(error => {
+			dispatch({
+				type: 'CART_ADDED_RESULTS',
+				status: results
+			})
+        })
+	}
+}
+
+export const getCart = () => {
+	return dispatch => {
+		fetch('/api/get-cart', {
+			headers: {
+                'content-type': 'application/json',
+                'accept': 'application/json'
+            },
+            credentials: 'same-origin'
+		}).then((response) => response.json())
+		.then((results) => {
+			dispatch({
+				type: 'GET_CART',
+				cart: results
+			})
+        })
+	}
+}

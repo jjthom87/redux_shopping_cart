@@ -10,6 +10,12 @@ class Store extends Component {
 		this.props.actions.categorySelect(e.target.value)
 	}
 	componentWillMount(){
+		this.props.actions.isUserSignedIn((results) => {
+			if(results.no_user){
+				this.props.history.push('/sign-in')
+			}
+		});
+
 		this.props.actions.getProducts();
 
 		setTimeout(() => {
@@ -37,6 +43,7 @@ class Store extends Component {
   						<td>{product.name}</td>
   						<td>{product.description}</td>
   						<td>{product.price}</td>
+  						<td><button key={index} onClick={() => this.props.actions.buyButtonPressed(this.props.user.id, product.id)}>Buy</button></td>
   					</tr>
   				)
   			});
@@ -67,6 +74,7 @@ class Store extends Component {
 											<th>Product Name</th>
 											<th>Product Description</th>
 											<th>Price</th>
+											<th>Buy?</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -85,7 +93,8 @@ class Store extends Component {
 function mapStateToProps(state) {
 	return {
 		products: state.messages.products,
-		categorySelectValue: state.messages.categorySelectValue
+		categorySelectValue: state.messages.categorySelectValue,
+		user: state.messages.user
 	}
 }
 

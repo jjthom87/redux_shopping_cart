@@ -4,7 +4,9 @@ const initialState = {
     status: '',
     info: '',
     products: undefined,
-    categorySelectValue: undefined
+    categorySelectValue: undefined,
+    user: undefined,
+    cart: undefined
 }
 
 const messages = (state = initialState, action) => {
@@ -19,8 +21,12 @@ const messages = (state = initialState, action) => {
             return { ...state, user: action.user }
         case 'GET_PRODUCTS':
             return { ...state, products: action.products }
+        case 'GET_CART':
+            return { ...state, cart: action.cart }
         case 'CATEGORY_SELECT':
             return { ...state, categorySelectValue: action.categorySelectValue}
+        case 'CART_ADDED_RESULTS':
+            return { ...state, status: action.status}
        	default:
             return state
     }
