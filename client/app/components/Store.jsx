@@ -43,7 +43,7 @@ class Store extends Component {
   						<td>{product.name}</td>
   						<td>{product.description}</td>
   						<td>{product.price}</td>
-  						<td><button key={index} onClick={() => this.props.actions.buyButtonPressed(this.props.user.id, product.id)}>Buy</button></td>
+  						<td><button key={index} onClick={() => this.props.actions.buyButtonPressed(this.props.user.id, product.id)}>Add to Cart</button></td>
   					</tr>
   				)
   			});
