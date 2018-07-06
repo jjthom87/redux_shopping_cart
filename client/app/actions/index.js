@@ -149,3 +149,18 @@ export const getCart = () => {
         })
 	}
 }
+
+export const removeFromCart = (user_id, product_id) => {
+	return dispatch => {
+		fetch(`/api/remove/${user_id}/${product_id}`, {
+			method: 'delete',
+            credentials: 'same-origin'
+		}).then((response) => response.json())
+		.then((results) => {
+			dispatch({
+				type: 'GET_CART',
+				cart: results
+			})
+        })
+	}
+}

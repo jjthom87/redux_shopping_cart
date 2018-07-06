@@ -91,6 +91,25 @@ module.exports = (app, passport) => {
 		})
 	});
 
+	app.delete('/api/remove/:user_id/:product_id', (req, res) => {
+		models.Cart.destroy({where:{
+			user_id: req.params.user_id, 
+			product_id: req.params.product_id
+		}}).then((deleteRes) => {
+			models.Cart.findAll({where: {user_id: req.user.id}}).then((results) => {
+				var productIds = results.map(r => parseInt(r.product_id));
+		        sequelize.query("SELECT * FROM \"Products\" WHERE id IN (" + productIds + ")", { type: sequelize.QueryTypes.SELECT})
+		        .then(products => { 
+		        	res.json(products);
+		        }).catch(err => {
+		        	res.json(err);
+		        })
+		    });
+		}).catch((err) => {
+			res.json({error: err})
+		})
+	});
+
 	app.get('*', (req,res) => {
 		res.sendFile(path.join(__dirname, '../../client/public/index.html'));
 	});

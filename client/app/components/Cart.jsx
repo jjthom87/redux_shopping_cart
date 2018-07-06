@@ -7,6 +7,7 @@ import { bindActionCreators } from 'redux';
 class Cart extends Component {
 	componentWillMount(){
 		this.props.actions.getCart();
+    this.props.actions.isUserSignedIn((user) => {});
 	}
 	render() {
 		let total = this.props.cart ? this.props.cart.map(c => parseInt(c.price)).reduce((n, m) => { return n + m }) : 0;
@@ -41,7 +42,7 @@ class Cart extends Component {
                       <td>
                         <button 
                           style={{color: 'white', backgroundColor: 'red'}}
-                          onClick={() => "hello"}
+                          onClick={() => this.props.actions.removeFromCart(this.props.user.id, c.id)}
                         >
                           Remove
                         </button>
@@ -62,7 +63,8 @@ class Cart extends Component {
 
 function mapStateToProps(state) {
 	return {
-		cart: state.messages.cart
+		cart: state.messages.cart,
+    user: state.messages.user
 	}
 }
 
